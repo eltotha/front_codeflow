@@ -1,0 +1,150 @@
+html,
+body,
+#root {
+	box-sizing: border-box;
+	height: 100%;
+	margin: 0;
+	min-width: 100%;
+	width: 100%;
+}
+
+*,
+*::before,
+*::after {
+	box-sizing: inherit;
+}
+
+.login-background {
+	--sky: #8be1ee;
+	--mint: #8aedda;
+	--blue: #8ac0ed;
+	--green: #8aedb8;
+	--periwinkle: #8aa1ed;
+	--text: #243b53;
+	--white: #ffffff;
+
+	align-items: center;
+	background: linear-gradient(135deg, var(--sky) 0%, var(--mint) 25%, var(--blue) 50%, var(--green) 75%, var(--periwinkle) 100%);
+	box-sizing: border-box;
+	display: flex;
+	justify-content: center;
+	min-height: 100dvh;
+	padding: clamp(1rem, 4vw, 2.5rem);
+	width: 100%;
+}
+
+.login-card {
+	box-sizing: border-box;
+	background: var(--white);
+	border-radius: 1.5rem;
+	box-shadow: 0 10px 20px rgb(0 0 0 / 30%);
+	max-width: 28rem;
+	padding: clamp(1.5rem, 6vw, 2.5rem);
+	width: min(100%, 28rem);
+}
+
+.login-header {
+	text-align: center;
+}
+
+.login-logo {
+	align-items: center;
+	color: var(--periwinkle);
+	display: flex;
+	flex-direction: column;
+	font-size: 2rem;
+	font-weight: 700;
+	gap: 0.5rem;
+	justify-content: center;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+}
+
+.login-logo-image {
+	height: 2.25rem;
+	width: 2.25rem;
+}
+
+.login-header h1 {
+	color: var(--text);
+	font-size: 1.5rem;
+	margin: 0.5rem 0 2rem;
+}
+
+.login-form-group {
+	margin-bottom: 1rem;
+}
+
+.login-input {
+	border: 1px solid #bcccdc;
+	border-radius: 0.5rem;
+	box-sizing: border-box;
+	color: var(--text);
+	font: inherit;
+	padding: 0.8rem 1rem;
+	width: 100%;
+}
+
+.login-input:focus {
+	border-color: var(--blue);
+	outline: 2px solid rgb(138 192 237 / 35%);
+}
+
+.login-checkbox {
+	align-items: center;
+	color: var(--text);
+	display: flex;
+	gap: 0.5rem;
+	margin: 1.25rem 0;
+}
+
+.login-button-container {
+	display: flex;
+	justify-content: center;
+}
+
+.login-button {
+	background-color: var(--mint);
+	border: 0;
+	border-radius: 0.5rem;
+	color: var(--text);
+	cursor: pointer;
+	font: inherit;
+	font-weight: 600;
+	padding: 0.8rem 1.5rem;
+	width: 100%;
+}
+
+.login-button:hover {
+	background-color: var(--green);
+}
+
+.login-footer {
+	align-items: center;
+	color: var(--text);
+	display: flex;
+	font-size: 0.875rem;
+	justify-content: center;
+	margin-top: 1.875rem;
+	text-align: center;
+}
+
+.login-register-link {
+	color: var(--periwinkle);
+	margin-left: 0.25rem;
+}
+
+@media (max-width: 28rem) {
+	.login-card {
+		border-radius: 1rem;
+	}
+
+	.login-footer {
+		flex-wrap: wrap;
+		gap: 0.25rem;
+	}
+
+	.login-register-link {
+		margin-left: 0;
+	}
+}
