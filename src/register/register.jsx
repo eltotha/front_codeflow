@@ -14,9 +14,11 @@ function Register() {
 		<main className="login-background">
 			<section className="login-card">
 				<header className="login-header">
-					<div className="login-logo" aria-label="FarmaFia">
-						<img className="login-logo-image" src={logoPlaceholder} alt="" />
-						<span>FarmaFia</span>
+					<div className="login-brand" aria-label="FarmaSys">
+						<div className="login-logo-placeholder">
+							<img className="login-logo-image" src={logoPlaceholder} alt="Espacio para el logo" />
+						</div>
+						<span className="login-brand-name">FarmaSys</span>
 					</div>
 					<h1>Crear Cuenta</h1>
 				</header>

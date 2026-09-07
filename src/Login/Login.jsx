@@ -2,7 +2,6 @@ import { Link, useNavigate } from "react-router-dom";
 import "./Login_Styles.css";
 import logoPlaceholder from "../assets/placholder.svg";
 
-
 function Login() {
     const navigate = useNavigate();
 
@@ -15,32 +14,23 @@ function Login() {
         <main className="login-background">
             <section className="login-card">
                 <header className="login-header">
-                    <div className="login-logo" aria-label="FarmaFia">
-                        <img className="login-logo-image" src={logoPlaceholder} alt="" />
-                        <span>FarmaFia</span>
+                    <div className="login-brand" aria-label="FarmaSys">
+                        <div className="login-logo-placeholder">
+                            <img className="login-logo-image" src={logoPlaceholder} alt="Espacio para el logo" />
+                        </div>
+                        <span className="login-brand-name">FarmaSys</span>
                     </div>
-                    <h1>Inicio de Sesión</h1>
+                    <p className="login-eyebrow">Acceso al sistema</p>
+                    <h1>Inicio de sesión</h1>
                 </header>
 
                 <form onSubmit={handleSubmit}>
                     <div className="login-form-group">
-                        <input
-                            className="login-input"
-                            type="text"
-                            name="Username"
-                            placeholder="Usuario"
-                            required
-                        />
+                        <input className="login-input" type="text" name="Username" placeholder="Usuario" required />
                     </div>
 
                     <div className="login-form-group">
-                        <input
-                            className="login-input"
-                            type="password"
-                            name="Password"
-                            placeholder="Contraseña"
-                            required
-                        />
+                        <input className="login-input" type="password" name="Password" placeholder="Contraseña" required />
                     </div>
 
                     <label className="login-checkbox">
@@ -53,8 +43,8 @@ function Login() {
                     </div>
 
                     <footer className="login-footer">
-                        No tienes una cuenta?
-                        <Link className="login-register-link" to="/register">Regístrate!</Link>
+                        ¿No tienes una cuenta?
+                        <Link className="login-register-link" to="/register">Regístrate</Link>
                     </footer>
                 </form>
             </section>
