@@ -14,6 +14,7 @@ const root = createRoot(rootElement);
 
 async function iniciarAplicacion() {
   try {
+    /* Espera al confirmacion de keycloak antes de renderizar la aplicación. */
     await keycloak.init({
       onLoad: "check-sso",
       pkceMethod: "S256",
