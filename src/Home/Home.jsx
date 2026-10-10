@@ -1,14 +1,16 @@
+import { Link } from "react-router-dom";
 import keycloak from "../keycloak/keycloak-js";
 import {
 	ACCESO,
 	DESCRIPCIONES_ROL,
 	MODULOS,
+	ROLES,
 	getAccesoModulo,
 	getRolPrincipal,
 	getRolesAsignados,
+	obtenerRutaPorRol,
 } from "../keycloak/roles";
 import "./Home_Styles.css";
-import logoPlaceholder from "../assets/placholder.svg";
 
 const ICONOS = {
 	ventas: (
@@ -62,39 +64,39 @@ const ICONOS = {
 	),
 };
 
+const VISTAS = [
+	{
+		rol: ROLES.ADMINISTRADOR,
+		titulo: "Panel Administrador",
+		clase: "btn-blue",
+	},
+	{
+		rol: ROLES.CAJERO,
+		titulo: "Terminal de Caja",
+		clase: "btn-green",
+	},
+	{
+		rol: ROLES.JEFE,
+		titulo: "Panel de Supervisión",
+		clase: "btn-primary",
+	},
+];
+
 function Home() {
 	const perfil = keycloak.tokenParsed;
 	const nombre = perfil?.given_name ?? perfil?.name ?? perfil?.preferred_username ?? "Usuario";
 	const roles = getRolesAsignados();
 	const rolPrincipal = getRolPrincipal();
 	const modulosVisibles = MODULOS.filter((modulo) => getAccesoModulo(modulo) !== null);
-
-	const cerrarSesion = () => {
-		keycloak.logout({ redirectUri: `${window.location.origin}/login` });
-	};
+	const vistasDisponibles = VISTAS.filter((vista) => roles.includes(vista.rol));
 
 	return (
 		<main className="home-background">
 			<div className="home-container">
-				<header className="home-header">
-					<div className="home-brand" aria-label="FarmaSys">
-						<div className="home-logo-placeholder">
-							<img className="home-logo-image" src={logoPlaceholder} alt="Logo de FarmaSys" />
-						</div>
-						<span className="home-brand-name">FarmaSys</span>
-					</div>
-					<div className="home-session">
-						<span className="home-user-name">{nombre}</span>
-						<button className="home-logout-button" type="button" onClick={cerrarSesion}>
-							Cerrar sesión
-						</button>
-					</div>
-				</header>
-
 				{rolPrincipal ? (
 					<>
 						<section className="home-welcome" aria-labelledby="home-title">
-							<p className="home-eyebrow">Pantalla principal</p>
+							<p className="home-eyebrow">FarmaSys</p>
 							<h1 id="home-title">Hola, {nombre}</h1>
 							<div className="home-role-badges">
 								{roles.map((rol) => (
@@ -104,6 +106,17 @@ function Home() {
 								))}
 							</div>
 							<p className="home-role-description">{DESCRIPCIONES_ROL[rolPrincipal]}</p>
+							<div className="home-views">
+								{vistasDisponibles.map((vista) => (
+									<Link
+										key={vista.rol}
+										to={obtenerRutaPorRol(vista.rol)}
+										className={`btn ${vista.clase}`}
+									>
+										{vista.titulo}
+									</Link>
+								))}
+							</div>
 						</section>
 
 						<section className="home-modules" aria-labelledby="home-modules-title">

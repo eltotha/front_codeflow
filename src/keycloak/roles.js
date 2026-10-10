@@ -1,6 +1,10 @@
 import keycloak from "./keycloak-js";
 
-export const ROLES = ["ADMINISTRADOR", "JEFE", "CAJERO"];
+export const ROLES = {
+	ADMINISTRADOR: "ADMINISTRADOR",
+	CAJERO: "CAJERO",
+	JEFE: "JEFE",
+};
 
 export const ACCESO = {
 	ESCRITURA: "escritura",
@@ -8,9 +12,9 @@ export const ACCESO = {
 };
 
 export const DESCRIPCIONES_ROL = {
-	ADMINISTRADOR: "Puede leer y escribir en todos los módulos del sistema.",
-	CAJERO: "Puede crear ventas y consultar la mayoría de los datos.",
-	JEFE: "Jefe de la farmacia: puede consultar toda la información, pero no editarla.",
+	ADMINISTRADOR: "Control total: puede leer y escribir en todos los endpoints y módulos.",
+	CAJERO: "Operación de caja: puede crear ventas y consultar la información operativa.",
+	JEFE: "Supervisión y auditoría: puede consultar y auditar toda la información sin editarla.",
 };
 
 export const MODULOS = [
@@ -36,7 +40,7 @@ export const MODULOS = [
 	{
 		id: "productos",
 		titulo: "Productos",
-		descripcion: "Consulta el catálogo de productos y medicamentos.",
+		descripcion: "Catálogo de medicamentos y productos.",
 		acceso: {
 			ADMINISTRADOR: ACCESO.ESCRITURA,
 			CAJERO: ACCESO.LECTURA,
@@ -46,7 +50,7 @@ export const MODULOS = [
 	{
 		id: "lotes",
 		titulo: "Lotes",
-		descripcion: "Consulta lotes, existencias y fechas de vencimiento.",
+		descripcion: "Control de lotes, existencias y fechas de vencimiento.",
 		acceso: {
 			ADMINISTRADOR: ACCESO.ESCRITURA,
 			CAJERO: ACCESO.LECTURA,
@@ -56,7 +60,7 @@ export const MODULOS = [
 	{
 		id: "proveedores",
 		titulo: "Proveedores",
-		descripcion: "Administra la información de los proveedores.",
+		descripcion: "Directorio e información de proveedores.",
 		acceso: {
 			ADMINISTRADOR: ACCESO.ESCRITURA,
 			JEFE: ACCESO.LECTURA,
@@ -65,17 +69,17 @@ export const MODULOS = [
 	{
 		id: "clientes",
 		titulo: "Clientes",
-		descripcion: "Consulta y registra los clientes de la farmacia.",
+		descripcion: "Registro y consulta de clientes.",
 		acceso: {
 			ADMINISTRADOR: ACCESO.ESCRITURA,
-			CAJERO: ACCESO.LECTURA,
+			CAJERO: ACCESO.ESCRITURA,
 			JEFE: ACCESO.LECTURA,
 		},
 	},
 	{
 		id: "categorias",
 		titulo: "Categorías",
-		descripcion: "Organiza el catálogo por categorías.",
+		descripcion: "Clasificación y categorías de productos.",
 		acceso: {
 			ADMINISTRADOR: ACCESO.ESCRITURA,
 			CAJERO: ACCESO.LECTURA,
@@ -90,15 +94,42 @@ export function getRolesRealm() {
 
 export function getRolesAsignados() {
 	const rolesRealm = getRolesRealm();
-	return ROLES.filter((rol) => rolesRealm.includes(rol));
+	const rolesPrioridad = [ROLES.ADMINISTRADOR, ROLES.JEFE, ROLES.CAJERO];
+	return rolesPrioridad.filter((rol) => rolesRealm.includes(rol));
 }
 
 export function getRolPrincipal() {
 	return getRolesAsignados()[0] ?? null;
 }
 
+export function esAdministrador() {
+	return getRolesRealm().includes(ROLES.ADMINISTRADOR);
+}
+
+export function esCajero() {
+	return getRolesRealm().includes(ROLES.CAJERO);
+}
+
+export function esJefe() {
+	return getRolesRealm().includes(ROLES.JEFE);
+}
+
+export function obtenerRutaPorRol(rol) {
+	switch (rol) {
+		case ROLES.ADMINISTRADOR:
+			return "/admin";
+		case ROLES.CAJERO:
+			return "/cajero";
+		case ROLES.JEFE:
+			return "/jefe";
+		default:
+			return "/home";
+	}
+}
+
 export function getAccesoModulo(modulo) {
-	const accesos = getRolesAsignados()
+	const roles = getRolesAsignados();
+	const accesos = roles
 		.map((rol) => modulo.acceso?.[rol])
 		.filter(Boolean);
 

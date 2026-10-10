@@ -39,10 +39,6 @@ function Login() {
                         </button>
                     </div>
 
-                    <footer className="login-footer">
-                        ¿No tienes una cuenta?
-                        <Link className="login-register-link" to="/register">Regístrate</Link>
-                    </footer>
                 </div>
             </section>
         </main>

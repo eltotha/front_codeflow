@@ -1,0 +1,113 @@
+.navbar {
+	background-color: #ffffff;
+	border-bottom: 1px solid var(--border-color);
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 0.75rem 2rem;
+	position: sticky;
+	top: 0;
+	z-index: 40;
+}
+
+.navbar-brand {
+	display: flex;
+	align-items: center;
+	gap: 0.75rem;
+	text-decoration: none;
+	color: var(--text-primary);
+}
+
+.navbar-logo {
+	width: 2.25rem;
+	height: 2.25rem;
+	border-radius: var(--radius-md);
+	background: linear-gradient(135deg, var(--color-cyan), var(--color-mint));
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-weight: 800;
+	font-size: 1.125rem;
+	color: var(--text-primary);
+}
+
+.navbar-title {
+	font-size: 1.25rem;
+	font-weight: 700;
+	letter-spacing: -0.02em;
+}
+
+.navbar-nav {
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+}
+
+.navbar-link {
+	padding: 0.5rem 0.875rem;
+	border-radius: var(--radius-md);
+	font-size: 0.875rem;
+	font-weight: 600;
+	color: var(--text-muted);
+	text-decoration: none;
+	transition: all 0.15s ease;
+}
+
+.navbar-link:hover {
+	color: var(--text-primary);
+	background-color: var(--bg-hover);
+}
+
+.navbar-link.active {
+	color: var(--text-primary);
+	background-color: rgba(139, 225, 238, 0.25);
+	border-bottom: 2px solid var(--color-blue);
+}
+
+.navbar-user {
+	display: flex;
+	align-items: center;
+	gap: 1rem;
+}
+
+.navbar-user-info {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-end;
+}
+
+.navbar-username {
+	font-size: 0.875rem;
+	font-weight: 600;
+	color: var(--text-primary);
+}
+
+.navbar-logout {
+	background-color: #ffffff;
+	border: 1px solid var(--border-color);
+	color: var(--text-muted);
+	padding: 0.4rem 0.85rem;
+	font-size: 0.8125rem;
+	border-radius: var(--radius-md);
+	cursor: pointer;
+	font-weight: 600;
+	transition: all 0.15s ease;
+}
+
+.navbar-logout:hover {
+	background-color: #fee2e2;
+	border-color: #fca5a5;
+	color: #991b1b;
+}
+
+@media (max-width: 768px) {
+	.navbar {
+		flex-direction: column;
+		gap: 0.75rem;
+		padding: 0.75rem 1rem;
+	}
+	.navbar-nav {
+		flex-wrap: wrap;
+		justify-content: center;
+	}
+}
