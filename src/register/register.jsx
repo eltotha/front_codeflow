@@ -1,13 +1,20 @@
-import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import keycloak from "../keycloak/keycloak-js";
 import "./register.css";
 import logoPlaceholder from "../assets/placholder.svg";
 
 function Register() {
-	const navigate = useNavigate();
+	const [error, setError] = useState("");
 
-	const handleSubmit = (event) => {
-		event.preventDefault();
-		navigate("/login");
+	const handleRegister = async () => {
+		setError("");
+		try {
+			await keycloak.register({ redirectUri: `${window.location.origin}/login` });
+		} catch (registerError) {
+			console.error("Error al registrarse con Keycloak:", registerError);
+			setError("No se pudo abrir el registro. Inténtalo de nuevo.");
+		}
 	};
 
 	return (
@@ -23,56 +30,19 @@ function Register() {
 					<h1>Crear Cuenta</h1>
 				</header>
 
-				<form onSubmit={handleSubmit}>
-					<div className="login-form-group">
-						<input
-							className="login-input"
-							type="text"
-							name="Username"
-							placeholder="Usuario"
-							required
-						/>
-					</div>
-
-					<div className="login-form-group">
-						<input
-							className="login-input"
-							type="email"
-							name="Email"
-							placeholder="Correo electrónico"
-							required
-						/>
-					</div>
-
-					<div className="login-form-group">
-						<input
-							className="login-input"
-							type="password"
-							name="Password"
-							placeholder="Contraseña"
-							required
-						/>
-					</div>
-
-					<div className="login-form-group">
-						<input
-							className="login-input"
-							type="password"
-							name="ConfirmPassword"
-							placeholder="Confirmar contraseña"
-							required
-						/>
-					</div>
-
+				<div>
+					{error && <p role="alert">{error}</p>}
 					<div className="login-button-container">
-						<button className="login-button" type="submit">Registrarme</button>
+						<button className="login-button" type="button" onClick={handleRegister}>
+							Crear cuenta con Keycloak
+						</button>
 					</div>
 
 					<footer className="login-footer">
 						¿Ya tienes una cuenta?
 						<Link className="login-register-link" to="/login">Inicia sesión</Link>
 					</footer>
-				</form>
+				</div>
 			</section>
 		</main>
 	);

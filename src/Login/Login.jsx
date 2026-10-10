@@ -1,13 +1,20 @@
-import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import keycloak from "../keycloak/keycloak-js";
 import "./Login_Styles.css";
 import logoPlaceholder from "../assets/placholder.svg";
 
 function Login() {
-    const navigate = useNavigate();
+    const [error, setError] = useState("");
 
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        navigate("/Home");
+    const handleLogin = async () => {
+        setError("");
+        try {
+            await keycloak.login({ redirectUri: `${window.location.origin}/home` });
+        } catch (loginError) {
+            console.error("Error al iniciar sesión con Keycloak:", loginError);
+            setError("No se pudo iniciar el acceso. Inténtalo de nuevo.");
+        }
     };
 
     return (
@@ -24,29 +31,19 @@ function Login() {
                     <h1>Inicio de sesión</h1>
                 </header>
 
-                <form onSubmit={handleSubmit}>
-                    <div className="login-form-group">
-                        <input className="login-input" type="text" name="Username" placeholder="Usuario" required />
-                    </div>
-
-                    <div className="login-form-group">
-                        <input className="login-input" type="password" name="Password" placeholder="Contraseña" required />
-                    </div>
-
-                    <label className="login-checkbox">
-                        <input type="checkbox" name="RememberMe" />
-                        Recordarme
-                    </label>
-
+                <div>
+                    {error && <p role="alert">{error}</p>}
                     <div className="login-button-container">
-                        <button className="login-button" type="submit">Ingresar</button>
+                        <button className="login-button" type="button" onClick={handleLogin}>
+                            Ingresar con Keycloak
+                        </button>
                     </div>
 
                     <footer className="login-footer">
                         ¿No tienes una cuenta?
                         <Link className="login-register-link" to="/register">Regístrate</Link>
                     </footer>
-                </form>
+                </div>
             </section>
         </main>
     );
